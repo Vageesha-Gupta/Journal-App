@@ -4,18 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EntryDetailsFragment # newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EntryDetailsFragment extends Fragment {
 
+
+public class EntryDetailsFragment extends Fragment implements DatePickerFragment.DatePickerListener {
+
+  private TextView dateTextView;
+  private TextView startTimeTextView;
+  private TextView endTimeTextView;
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,5 +33,46 @@ public class EntryDetailsFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    dateTextView = view.findViewById(R.id.btn_entry_date);
+    startTimeTextView = view.findViewById(R.id.btn_start_time);
+    endTimeTextView = view.findViewById(R.id.btn_end_time);
+
+    dateTextView.setOnClickListener(v -> {
+      NavController navController = Navigation.findNavController(view);
+        navController.navigate(R.id.datePickerAction);
+    });
+
+    startTimeTextView.setOnClickListener(v -> {
+      NavController navController = Navigation.findNavController(view);
+      Bundle bundle = new Bundle();
+      bundle.putBoolean("isStartTime", true);
+      navController.navigate(R.id.timePickerAction,bundle);
+    });
+    endTimeTextView.setOnClickListener(v -> {
+      NavController navController = Navigation.findNavController(view);
+      Bundle bundle = new Bundle();
+      bundle.putBoolean("isStartTime", false); // Indicate that this is for the end time
+      navController.navigate(R.id.timePickerAction, bundle);
+    });
   }
+  @Override
+  public void onDateSelected(int year, int month, int day) {
+    updateDate(year, month, day);
+  }
+
+  public void updateDate(int year, int month, int day) {
+    String selectedDate = day + "/" + month + "/" + year; // Format the date
+    dateTextView.setText(selectedDate); // Display the selected date in the TextView
+  }
+  public void updateTime(int hour, int minute, boolean isStartTime) {
+    String time = String.format("%02d:%02d", hour, minute);
+    if (isStartTime) {
+      startTimeTextView.setText(time); // Update the start time
+    } else {
+      endTimeTextView.setText(time); // Update the end time
+    }
+  }
+
+
 }
