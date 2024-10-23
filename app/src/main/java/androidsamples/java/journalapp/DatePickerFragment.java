@@ -46,7 +46,7 @@ public class DatePickerFragment extends DialogFragment {
     int day = getArguments() != null ? getArguments().getInt("day", c.get(Calendar.DAY_OF_MONTH)):c.get(Calendar.DAY_OF_MONTH);
 
     return new DatePickerDialog(requireContext(), (dp, y, m, d) -> {
-      EntryDetailsFragment fragment = (EntryDetailsFragment) getParentFragment();
+//      EntryDetailsFragment fragment = (EntryDetailsFragment) getParentFragment();
       if (listener != null) {
         listener.onDateSelected(y, m + 1, d);
       }

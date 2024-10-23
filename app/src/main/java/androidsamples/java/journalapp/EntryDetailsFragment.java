@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EntryDetailsFragment # newInstance} factory method to
@@ -19,7 +21,7 @@ import androidx.navigation.Navigation;
  */
 
 
-public class EntryDetailsFragment extends Fragment implements DatePickerFragment.DatePickerListener {
+public class EntryDetailsFragment extends Fragment implements DatePickerFragment.DatePickerListener,TimePickerFragment.TimePickerListener {
 
   private TextView dateTextView;
   private TextView startTimeTextView;
@@ -44,16 +46,22 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     });
 
     startTimeTextView.setOnClickListener(v -> {
-      NavController navController = Navigation.findNavController(view);
-      Bundle bundle = new Bundle();
-      bundle.putBoolean("isStartTime", true);
-      navController.navigate(R.id.timePickerAction,bundle);
+//      NavController navController = Navigation.findNavController(view);
+//      Bundle bundle = new Bundle();
+//      bundle.putBoolean("isStartTime", true);
+//      navController.navigate(R.id.timePickerAction,bundle);
+      TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(new Date(), true);
+      timePickerFragment.setTargetFragment(EntryDetailsFragment.this, 0); // Set the target fragment to receive the result
+      timePickerFragment.show(getParentFragmentManager(), "timePicker");
     });
     endTimeTextView.setOnClickListener(v -> {
-      NavController navController = Navigation.findNavController(view);
-      Bundle bundle = new Bundle();
-      bundle.putBoolean("isStartTime", false); // Indicate that this is for the end time
-      navController.navigate(R.id.timePickerAction, bundle);
+//      NavController navController = Navigation.findNavController(view);
+//      Bundle bundle = new Bundle();
+//      bundle.putBoolean("isStartTime", false); // Indicate that this is for the end time
+//      navController.navigate(R.id.timePickerAction, bundle);
+      TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(new Date(), false);
+      timePickerFragment.setTargetFragment(EntryDetailsFragment.this, 0); // Set the target fragment to receive the result
+      timePickerFragment.show(getParentFragmentManager(), "timePicker");
     });
   }
   @Override
@@ -72,6 +80,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     } else {
       endTimeTextView.setText(time); // Update the end time
     }
+  }
+  @Override
+  public void onTimeSelected(int hour, int minute, boolean isStartTime) {
+    updateTime(hour, minute, isStartTime);
   }
 
 

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 
 
-public class MainActivity extends AppCompatActivity implements DatePickerFragment.DatePickerListener {
+public class MainActivity extends AppCompatActivity implements DatePickerFragment.DatePickerListener, TimePickerFragment.TimePickerListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -27,4 +27,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
       fragment.updateDate(year, month, day);
     }
   }
+  @Override
+  public void onTimeSelected(int hour, int minute, boolean isStartTime) {
+    // Handle the time selected event here
+    EntryDetailsFragment fragment = (EntryDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+    if (fragment != null) {
+      fragment.updateTime(hour, minute, isStartTime);
+    }
+  }
+
 }

@@ -13,20 +13,33 @@ import androidx.fragment.app.DialogFragment;
 
 public class TimePickerFragment extends DialogFragment {
 
+    public interface TimePickerListener {
+        void onTimeSelected(int hour, int minute, boolean isStartTime);
+    }
+
+    private TimePickerListener listener;
+    private boolean isStartTime;
+
   @NonNull
-  public static TimePickerFragment newInstance(Date time) {
+  public static TimePickerFragment newInstance(Date time,boolean isStartTime) {
     TimePickerFragment fragment = new TimePickerFragment();
     Bundle args = new Bundle();
-    args.putInt("hours", time.getHours());
+    args.putInt("hour", time.getHours());
+    args.putBoolean("isStartTime", isStartTime);
     args.putInt("minute", time.getMinutes());
+
     fragment.setArguments(args);
     return fragment;
   }
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    // TODO implement the method
+      super.onCreate(savedInstanceState);
+      if (getTargetFragment() instanceof TimePickerListener) {
+          listener = (TimePickerListener) getTargetFragment();
+      } else {
+          throw new ClassCastException("Target fragment must implement TimePickerListener");
+      }
   }
 
   @NonNull
@@ -35,12 +48,12 @@ public class TimePickerFragment extends DialogFragment {
       Calendar c = Calendar.getInstance();
       int hour = getArguments() != null ? getArguments().getInt("hour", c.get(Calendar.HOUR_OF_DAY)): c.get(Calendar.HOUR_OF_DAY);
       int minute = getArguments() != null ? getArguments().getInt("minute", c.get(Calendar.MINUTE)): c.get(Calendar.MINUTE);
+
+      isStartTime = getArguments() != null && getArguments().getBoolean("isStartTime", true);
+
       return new TimePickerDialog(requireContext(), (view, selectedHour, selectedMinute) -> {
-          // Pass the selected time back to EntryDetailsFragment
-          EntryDetailsFragment fragment = (EntryDetailsFragment) getParentFragment();
-          if (fragment != null) {
-              boolean isStartTime = getArguments() != null && getArguments().getBoolean("isStartTime", true);
-              fragment.updateTime(selectedHour, selectedMinute, isStartTime);
+          if (listener != null) {
+              listener.onTimeSelected(selectedHour, selectedMinute, isStartTime);
           }
       }, hour, minute, true);
   }
