@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Date;
 
@@ -26,6 +29,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   private TextView dateTextView;
   private TextView startTimeTextView;
   private TextView endTimeTextView;
+  private JournalViewModel journalViewModel;
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +67,16 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       timePickerFragment.setTargetFragment(EntryDetailsFragment.this, 0); // Set the target fragment to receive the result
       timePickerFragment.show(getParentFragmentManager(), "timePicker");
     });
+    ImageButton deleteButton = view.findViewById(R.id.btn_delete_entry);
+    deleteButton.setOnClickListener(v -> {
+      // Assume you have the JournalEntry you want to delete
+      JournalEntry entryToDelete = getJournalEntry();
+      journalViewModel.delete(entryToDelete);
+
+      // Navigate back to the list after deletion
+      NavHostFragment.findNavController(EntryDetailsFragment.this)
+              .navigate(R.id.addEntryAction);
+    });
   }
   @Override
   public void onDateSelected(int year, int month, int day) {
@@ -84,6 +98,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   @Override
   public void onTimeSelected(int hour, int minute, boolean isStartTime) {
     updateTime(hour, minute, isStartTime);
+  }
+  private JournalEntry getJournalEntry() {
+    int entryId = getArguments().getInt("entryId"); // Retrieve entry ID from arguments
+    return journalViewModel.getEntryById(entryId); // Use ViewModel to get the entry
   }
 
 
