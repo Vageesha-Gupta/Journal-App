@@ -19,10 +19,11 @@ public class JournalEntry {
 //    private Date entryDate;
 
 
-    public JournalEntry(String date, String startTime, String endTime) {
+    public JournalEntry(String date, String startTime, String endTime,String description) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.description = description;
     }
 
     // Getters and setters

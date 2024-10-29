@@ -24,6 +24,6 @@ public interface JournalEntryDao {
     LiveData<List<JournalEntry>> getAllEntries();
 
     @Query("SELECT * FROM journal_entries WHERE id = :id LIMIT 1") // Ensure 'id' is the correct column name
-    JournalEntry getEntryById(int id);
+    LiveData<JournalEntry> getEntryById(int id);
 
 }

@@ -34,8 +34,11 @@ public class JournalRepository {
             journalEntryDao.delete(entry);
         });
     }
-    public JournalEntry getEntryById(int id) {
+    public LiveData<JournalEntry> getEntryById(int id) {
         return journalEntryDao.getEntryById(id); // Retrieve entry by ID
+    }
+    public LiveData<List<JournalEntry>> getAllEntries() {
+        return allEntries;
     }
 }
 
