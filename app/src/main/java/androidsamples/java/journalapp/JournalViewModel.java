@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class JournalViewModel extends AndroidViewModel {
     private JournalRepository repository;
@@ -15,6 +16,10 @@ public class JournalViewModel extends AndroidViewModel {
 
     public void insert(JournalEntry entry) {
         new InsertEntryAsyncTask(repository).execute(entry);
+    }
+
+    public LiveData<JournalEntry> getEntryById(int id) {
+        return repository.getEntryById(id); // Adjust the repository to return LiveData
     }
 
     // AsyncTask to insert entry
@@ -47,9 +52,9 @@ public class JournalViewModel extends AndroidViewModel {
             return null;
         }
     }
-    public JournalEntry getEntryById(int id) {
-        return repository.getEntryById(id); // Fetch entry by ID
-    }
+//    public JournalEntry getEntryById(int id) {
+//        return repository.getEntryById(id); // Fetch entry by ID
+//    }
 
 
 }

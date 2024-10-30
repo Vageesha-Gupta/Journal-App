@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -30,6 +31,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   private TextView startTimeTextView;
   private TextView endTimeTextView;
   private JournalViewModel journalViewModel;
+  private JournalEntry currentJournalEntry;
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     dateTextView = view.findViewById(R.id.btn_entry_date);
     startTimeTextView = view.findViewById(R.id.btn_start_time);
     endTimeTextView = view.findViewById(R.id.btn_end_time);
+    journalViewModel = new ViewModelProvider(requireActivity()).get(JournalViewModel.class);
+
+    getJournalEntry();
 
     dateTextView.setOnClickListener(v -> {
       NavController navController = Navigation.findNavController(view);
@@ -70,12 +75,15 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     ImageButton deleteButton = view.findViewById(R.id.btn_delete_entry);
     deleteButton.setOnClickListener(v -> {
       // Assume you have the JournalEntry you want to delete
-      JournalEntry entryToDelete = getJournalEntry();
-      journalViewModel.delete(entryToDelete);
+//      JournalEntry entryToDelete = getJournalEntry();
+//      journalViewModel.delete(entryToDelete);
 
-      // Navigate back to the list after deletion
-      NavHostFragment.findNavController(EntryDetailsFragment.this)
-              .navigate(R.id.addEntryAction);
+
+      if (currentJournalEntry != null) {
+        journalViewModel.delete(currentJournalEntry);
+        NavHostFragment.findNavController(EntryDetailsFragment.this)
+                .navigate(R.id.addEntryAction);
+      }
     });
   }
   @Override
@@ -99,9 +107,20 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   public void onTimeSelected(int hour, int minute, boolean isStartTime) {
     updateTime(hour, minute, isStartTime);
   }
-  private JournalEntry getJournalEntry() {
-    int entryId = getArguments().getInt("entryId"); // Retrieve entry ID from arguments
-    return journalViewModel.getEntryById(entryId); // Use ViewModel to get the entry
+  private void getJournalEntry() {
+    int entryId = getArguments().getInt("entryId",-1); // Retrieve entry ID from arguments
+    if (entryId == -1) {
+      return;
+    }
+
+    journalViewModel.getEntryById(entryId).observe(getViewLifecycleOwner(), journalEntry -> {
+      if (journalEntry != null) {
+        currentJournalEntry = journalEntry;
+        dateTextView.setText(journalEntry.getDate());
+        startTimeTextView.setText(journalEntry.getStartTime());
+        endTimeTextView.setText(journalEntry.getEndTime());
+      }});
+
   }
 
 

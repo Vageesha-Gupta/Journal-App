@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
   private TextView dateTextView;
   private TextView startTimeTextView;
   private TextView endTimeTextView;
+  private TextView descriptionTextView;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -69,12 +70,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
     String date = dateTextView.getText().toString();
     String startTime = startTimeTextView.getText().toString();
     String endTime = endTimeTextView.getText().toString();
+    String description = descriptionTextView.getText().toString();
 
     // Create a new JournalEntry object
-    JournalEntry entry = new JournalEntry(date, startTime, endTime);
+    JournalEntry entry = new JournalEntry(date, startTime, endTime,description);
     entry.setDate(date);
     entry.setStartTime(startTime);
     entry.setEndTime(endTime);
+    entry.setDescription(description);
 
     // Use a ViewModel to interact with the database
     JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
