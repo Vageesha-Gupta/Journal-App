@@ -13,12 +13,12 @@ public class JournalEntry {
     private String startTime;
     private String endTime;
 
-    private String title;
+//    private String title;
     private String description;
 
 //    private Date entryDate;
 
-
+    public JournalEntry() {}
     public JournalEntry(String date, String startTime, String endTime,String description) {
         this.date = date;
         this.startTime = startTime;
@@ -35,25 +35,26 @@ public class JournalEntry {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
+//    public String getTitle() {
+//        return title;
+//    }
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description) {
+    public void setDescription(String taskdescription) {
         this.description = description;
+    }
+
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getStartTime() {

@@ -6,15 +6,20 @@ import android.os.AsyncTask;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 public class JournalViewModel extends AndroidViewModel {
     private JournalRepository repository;
+    private LiveData<List<JournalEntry>> allEntries;
 
     public JournalViewModel(Application application) {
         super(application);
         repository = new JournalRepository(application);
+        allEntries = repository.getAllEntries();
     }
 
     public void insert(JournalEntry entry) {
+
         new InsertEntryAsyncTask(repository).execute(entry);
     }
 
@@ -35,6 +40,9 @@ public class JournalViewModel extends AndroidViewModel {
             repository.insert(entries[0]);
             return null;
         }
+    }
+    public LiveData<List<JournalEntry>> getAllEntries() {
+        return allEntries; // Return all journal entries
     }
     public void delete(JournalEntry entry) {
         new DeleteEntryAsyncTask(repository).execute(entry);

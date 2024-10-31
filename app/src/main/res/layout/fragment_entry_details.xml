@@ -5,6 +5,7 @@
     android:id="@+id/layout_entry_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+  <include layout="@layout/toolbar_layout" />
 
   <TextView
       android:id="@+id/record_entry"
@@ -89,6 +90,16 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textView" />
+  <ImageButton
+      android:id="@+id/btn_share_entry"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_share"
+      android:contentDescription="Share Entry"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="16dp"
+      android:background="?attr/selectableItemBackground" />
   <ImageButton
       android:id="@+id/btn_delete_entry"
       android:layout_width="wrap_content"
