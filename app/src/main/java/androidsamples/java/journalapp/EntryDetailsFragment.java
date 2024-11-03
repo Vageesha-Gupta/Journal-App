@@ -38,6 +38,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   private TextView dateTextView;
   private TextView startTimeTextView;
   private TextView endTimeTextView;
+  private TextView descriptionTextView;
   private JournalViewModel journalViewModel;
 //  private TextView descriptionTextView;
   private JournalEntry currentJournalEntry;
@@ -61,6 +62,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     dateTextView = view.findViewById(R.id.btn_entry_date);
     startTimeTextView = view.findViewById(R.id.btn_start_time);
     endTimeTextView = view.findViewById(R.id.btn_end_time);
+    descriptionTextView = view.findViewById(R.id.edit_title);
 //    descriptionTextView = view.findViewById(R.id.edit_description);
 
     journalViewModel = new ViewModelProvider(requireActivity()).get(JournalViewModel.class);
@@ -125,6 +127,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
         startActivity(Intent.createChooser(sendIntent, "Share via"));
       }
     });
+    descriptionTextView.setOnClickListener(v -> {
+      // Handle click event for title if needed (e.g., you could open a dialog)
+      Toast.makeText(getContext(), "Title clicked", Toast.LENGTH_SHORT).show();
+    });
     Button saveButton = view.findViewById(R.id.btn_save);
     saveButton.setOnClickListener(v -> saveEntry());
 
@@ -136,7 +142,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     outState.putString("date", dateTextView.getText().toString());
     outState.putString("startTime", startTimeTextView.getText().toString());
     outState.putString("endTime", endTimeTextView.getText().toString());
-//    outState.putString("description", descriptionTextView.getText().toString());
+    outState.putString("description", descriptionTextView.getText().toString());
   }
 
   @Override
@@ -146,7 +152,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       dateTextView.setText(savedInstanceState.getString("date"));
       startTimeTextView.setText(savedInstanceState.getString("startTime"));
       endTimeTextView.setText(savedInstanceState.getString("endTime"));
-//      descriptionTextView.setText(savedInstanceState.getString("description"));
+      descriptionTextView.setText(savedInstanceState.getString("description"));
     }
   }
 
@@ -173,7 +179,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     String date = dateTextView.getText().toString();
     String startTime = startTimeTextView.getText().toString();
     String endTime = endTimeTextView.getText().toString();
-    String description = ""; // Use this if you have a description field
+    String description = descriptionTextView.getText().toString(); // Use this if you have a description field
 
     if (date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
       // Handle error: All fields must be filled
@@ -211,6 +217,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
           dateTextView.setText(journalEntry.getDate());
           startTimeTextView.setText(journalEntry.getStartTime());
           endTimeTextView.setText(journalEntry.getEndTime());
+          descriptionTextView.setText(journalEntry.getDescription());
           // Assuming a TextView for description
 //          descriptionTextView.setText(journalEntry.getDescription());
         }

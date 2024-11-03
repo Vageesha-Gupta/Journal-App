@@ -12,9 +12,9 @@ public class JournalEntry {
     private String date;
     private String startTime;
     private String endTime;
-
-//    private String title;
     private String description;
+//    private String title;
+
 
 //    private Date entryDate;
 
@@ -44,7 +44,7 @@ public class JournalEntry {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String taskdescription) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
