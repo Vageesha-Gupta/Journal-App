@@ -49,8 +49,8 @@ public class EntryListFragment extends Fragment {
 
     Toolbar toolbar = view.findViewById(R.id.toolbar);
     ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-    TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-    toolbarTitle.setText("JournalApp");
+//    TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+//    toolbarTitle.setText("JournalApp");
 
     // Set up add entry button
     View addEntryButton = view.findViewById(R.id.btn_add_entry);

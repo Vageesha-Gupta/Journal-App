@@ -55,8 +55,8 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     super.onViewCreated(view, savedInstanceState);
     Toolbar toolbar = view.findViewById(R.id.toolbar);
     ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-    TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-    toolbarTitle.setText("JournalApp");
+//    TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+//    toolbarTitle.setText("JournalApp");
 
     dateTextView = view.findViewById(R.id.btn_entry_date);
     startTimeTextView = view.findViewById(R.id.btn_start_time);
