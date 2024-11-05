@@ -96,7 +96,7 @@ public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutor
     // Observe the LiveData
     journalEntryDao.getAllEntries().observeForever(entries -> {
       if (entries != null && !entries.isEmpty()) {
-        assertEquals("Homework", entries.get(0).getTitle());
+        assertEquals("Homework", entries.get(0).getDescription());
         assertEquals("08:00", entries.get(0).getStartTime());
         observerLatch.countDown();
       }

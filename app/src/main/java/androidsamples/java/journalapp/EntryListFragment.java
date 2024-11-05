@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
@@ -58,17 +59,17 @@ public class EntryListFragment extends Fragment {
       NavController navController = Navigation.findNavController(view);
       navController.navigate(R.id.addEntryAction); // Navigate to add entry screen
     });
-//    View infoButton = view.findViewById(R.id.info_button); // Make sure this ID matches the XML
-//    infoButton.setOnClickListener(v -> {
-//      Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://jamesclear.com/atomic-habits"));
-//      startActivity(browserIntent);
-//    });
-    ImageButton infoButton = view.findViewById(R.id.info_button); // Ensure this ID matches the XML
+    View infoButton = view.findViewById(R.id.info_button); // Make sure this ID matches the XML
     infoButton.setOnClickListener(v -> {
-      Log.d("InfoButton", "Info button clicked");
       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://jamesclear.com/atomic-habits"));
       startActivity(browserIntent);
     });
+//    ImageButton infoButton = view.findViewById(R.id.info_button); // Ensure this ID matches the XML
+//    infoButton.setOnClickListener(v -> {
+//      Log.d("InfoButton", "Info button clicked");
+//      Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://jamesclear.com/atomic-habits"));
+//      startActivity(browserIntent);
+//    });
 
     // Set up RecyclerView and adapter
     RecyclerView recyclerView = view.findViewById(R.id.recyclerView);

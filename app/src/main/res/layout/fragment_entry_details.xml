@@ -110,26 +110,29 @@
 <!--      app:layout_constraintEnd_toEndOf="parent"-->
 <!--      app:layout_constraintTop_toTopOf="@+id/btn_save"-->
 <!--      android:background="?attr/selectableItemBackground"/>-->
-    <ImageButton
-        android:id="@+id/btn_share_entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_share"
-        android:contentDescription="Share Entry"
-        app:layout_constraintEnd_toStartOf="@+id/btn_delete_entry"
-        app:layout_constraintTop_toTopOf="@+id/btn_save"
-        android:background="?attr/selectableItemBackground" />
 
-    <ImageButton
-        android:id="@+id/btn_delete_entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_delete"
-        android:contentDescription="@string/delete_entry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_save"
-        android:background="?attr/selectableItemBackground"/>
+  <ImageButton
+      android:id="@+id/btn_share_entry"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+  android:layout_marginEnd="8dp"
+  android:background="?attr/selectableItemBackground"
+  android:contentDescription="Share Entry"
+  android:src="@drawable/ic_share"
+  app:layout_constraintEnd_toStartOf="@+id/btn_delete_entry"
+  app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageButton
+      android:id="@+id/btn_delete_entry"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:background="?attr/selectableItemBackground"
+      android:contentDescription="@string/delete_entry"
+      android:src="@drawable/ic_delete"
+      app:layout_constraintEnd_toEndOf="parent"
+      tools:layout_editor_absoluteY="16dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
