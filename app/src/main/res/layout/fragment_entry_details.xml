@@ -127,12 +127,14 @@
       android:id="@+id/btn_delete_entry"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/btn_share_entry"
+      android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
       android:background="?attr/selectableItemBackground"
       android:contentDescription="@string/delete_entry"
       android:src="@drawable/ic_delete"
       app:layout_constraintEnd_toEndOf="parent"
-      tools:layout_editor_absoluteY="16dp" />
+      app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
