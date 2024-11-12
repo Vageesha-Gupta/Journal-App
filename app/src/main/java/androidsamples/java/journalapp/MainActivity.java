@@ -78,16 +78,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
       EntryDetailsFragment entryDetailsFragment = (EntryDetailsFragment) currentFragment;
 
       // Get the views from the fragment's layout
-      String title = ((EditText) entryDetailsFragment.getView().findViewById(R.id.edit_title)).getText().toString().trim();
+      String description = ((EditText) entryDetailsFragment.getView().findViewById(R.id.edit_title)).getText().toString().trim();
       String date = ((TextView) entryDetailsFragment.getView().findViewById(R.id.btn_entry_date)).getText().toString();
       String startTime = ((TextView) entryDetailsFragment.getView().findViewById(R.id.btn_start_time)).getText().toString();
       String endTime = ((TextView) entryDetailsFragment.getView().findViewById(R.id.btn_end_time)).getText().toString();
 //      String description = ((EditText) entryDetailsFragment.getView().findViewById(R.id.edit_description)).getText().toString();
 
       // Validate fields
-      if (title.isEmpty() || date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
+      if (description.isEmpty() || date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
         StringBuilder missingFields = new StringBuilder("Please fill in the following fields: ");
-        if (title.isEmpty()) missingFields.append("Title, ");
+        if (description.isEmpty()) missingFields.append("Title, ");
         if (date.isEmpty()) missingFields.append("Date, ");
         if (startTime.isEmpty()) missingFields.append("Start Time, ");
         if (endTime.isEmpty()) missingFields.append("End Time, ");
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
       }
 
       // Create and save the JournalEntry
-      JournalEntry entry = new JournalEntry(date, startTime, endTime);
+      JournalEntry entry = new JournalEntry(date, startTime, endTime, description);
       JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
       viewModel.insert(entry);
 

@@ -23,6 +23,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import androidx.test.espresso.accessibility.AccessibilityChecks;
 
@@ -62,6 +63,13 @@ public class ExampleInstrumentedTest {
 
         // Enter title
         onView(withId(R.id.edit_title)).perform(replaceText("My Test Journal Entry"));
+        AccessibilityChecks.enable().setRunChecksFromRootView(false);
+
+
+        // Check if date picker and time buttons are displayed
+        onView(withId(R.id.btn_entry_date)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_start_time)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_end_time)).check(matches(isDisplayed()));
 
         // Select date, start time, and end time (assuming date and time pickers are correctly set up)
         onView(withId(R.id.btn_entry_date)).perform(click());
@@ -71,9 +79,17 @@ public class ExampleInstrumentedTest {
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.btn_start_time)).perform(click());
         // Add start time picker interaction here if needed
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
+                .perform(PickerActions.setTime(9, 30)); // Set start time to 9:30 AM
+        onView(withId(android.R.id.button1)).perform(click()); // Click "OK"
 
         onView(withId(R.id.btn_end_time)).perform(click());
         // Add end time picker interaction here if needed
+        AccessibilityChecks.enable().setRunChecksFromRootView(true);
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
+                .perform(PickerActions.setTime(17, 0)); // Set end time to 5:00 PM
+        onView(withId(android.R.id.button1)).perform(click()); // Click "OK"
+
 
         // Click "Save Entry" button to save
         onView(withId(R.id.btn_save)).perform(click());
