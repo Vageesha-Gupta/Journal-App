@@ -22,9 +22,28 @@ public class JournalViewModel extends AndroidViewModel {
 
         new InsertEntryAsyncTask(repository).execute(entry);
     }
+    public void update(JournalEntry entry) {
+        new UpdateEntryAsyncTask(repository).execute(entry);
+    }
+//    public LiveData<List<JournalEntry>> getAllEntries() {
+//        return allEntries; // Return all journal entries
+//    }
 
     public LiveData<JournalEntry> getEntryById(int id) {
         return repository.getEntryById(id); // Adjust the repository to return LiveData
+    }
+    private static class UpdateEntryAsyncTask extends AsyncTask<JournalEntry, Void, Void> {
+        private JournalRepository repository;
+
+        private UpdateEntryAsyncTask(JournalRepository repository) {
+            this.repository = repository;
+        }
+
+        @Override
+        protected Void doInBackground(JournalEntry... entries) {
+            repository.update(entries[0]); // Call the update method in the repository
+            return null;
+        }
     }
 
     // AsyncTask to insert entry

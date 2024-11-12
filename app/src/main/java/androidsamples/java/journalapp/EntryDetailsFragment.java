@@ -128,10 +128,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
         startActivity(Intent.createChooser(sendIntent, "Share via"));
       }
     });
-    descriptionTextView.setOnClickListener(v -> {
-      // Handle click event for title if needed (e.g., you could open a dialog)
-      Toast.makeText(getContext(), "Title clicked", Toast.LENGTH_SHORT).show();
-    });
+//    descriptionTextView.setOnClickListener(v -> {
+//      // Handle click event for title if needed (e.g., you could open a dialog)
+//      Toast.makeText(getContext(), "Title clicked", Toast.LENGTH_SHORT).show();
+//    });
     Button saveButton = view.findViewById(R.id.btn_save);
     saveButton.setOnClickListener(v -> saveEntry());
 
@@ -188,14 +188,26 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       return;
     }
 
-    JournalEntry entry = new JournalEntry();
-    entry.setDate(date);
-    entry.setStartTime(startTime);
-    entry.setEndTime(endTime);
-    entry.setDescription(description); // Add if applicable
+    if (currentJournalEntry != null) {
+      // We're editing an existing entry, so update it
+      currentJournalEntry.setDate(date);
+      currentJournalEntry.setStartTime(startTime);
+      currentJournalEntry.setEndTime(endTime);
+      currentJournalEntry.setDescription(description); // Add if applicable
 
-    // Save entry to the ViewModel
-    journalViewModel.insert(entry);
+      // Update entry in the ViewModel
+      journalViewModel.update(currentJournalEntry);
+    } else {
+      // We're creating a new entry
+      JournalEntry entry = new JournalEntry();
+      entry.setDate(date);
+      entry.setStartTime(startTime);
+      entry.setEndTime(endTime);
+      entry.setDescription(description); // Add if applicable
+
+      // Save the new entry to the ViewModel
+      journalViewModel.insert(entry);
+    }
 
     // Navigate back to the list
     NavHostFragment.findNavController(this).navigateUp();
