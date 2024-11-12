@@ -100,21 +100,23 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       timePickerFragment.show(getParentFragmentManager(), "timePicker");
     });
     ImageButton deleteButton = view.findViewById(R.id.btn_delete_entry);
-//    deleteButton.setOnClickListener(v -> {
-//      // Assume you have the JournalEntry you want to delete
-////      JournalEntry entryToDelete = getJournalEntry();
-////      journalViewModel.delete(entryToDelete);
     deleteButton.setOnClickListener(v -> {
-      new AlertDialog.Builder(requireContext())
-              .setMessage("Are you sure you want to delete this entry?")
-              .setPositiveButton("Yes", (dialog, which) -> {
-                // Directly delete the currentJournalEntry without checking for null
-                journalViewModel.delete(currentJournalEntry);
-                // Navigate back after deletion
-                NavHostFragment.findNavController(EntryDetailsFragment.this).navigateUp();
-              })
-              .setNegativeButton("No", null)
-              .show();
+      if (currentJournalEntry == null) {
+        // Show a message if there's no entry to delete
+        Toast.makeText(getContext(), "No entry to delete.", Toast.LENGTH_SHORT).show();
+      } else {
+        // Show confirmation dialog if an entry exists
+        new AlertDialog.Builder(requireContext())
+                .setMessage("Are you sure you want to delete this entry?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                  // Delete the entry only if it exists
+                  journalViewModel.delete(currentJournalEntry);
+                  // Navigate back after deletion
+                  NavHostFragment.findNavController(EntryDetailsFragment.this).navigateUp();
+                })
+                .setNegativeButton("No", null)
+                .show();
+      }
     });
     ImageButton shareButton = view.findViewById(R.id.btn_share_entry);
     shareButton.setOnClickListener(v -> {
