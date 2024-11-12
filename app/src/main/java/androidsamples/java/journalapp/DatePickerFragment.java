@@ -28,49 +28,55 @@ public class DatePickerFragment extends DialogFragment {
     return fragment;
   }
 
-  public void onAttach(@NonNull Context context) {
-    super.onAttach(context);
-    if (context instanceof DatePickerListener) {
-      listener = (DatePickerListener) context;
+  public void onCreate(@NonNull Bundle savedInstanceState) {
+//    super.onCreate(context);
+//    if (context instanceof DatePickerListener) {
+//      listener = (DatePickerListener) context;
+//    } else {
+//      throw new ClassCastException(context.toString() + " must implement DatePickerListener");
+//    }
+    super.onCreate(savedInstanceState);
+    if (getTargetFragment() instanceof DatePickerFragment.DatePickerListener) {
+      listener = (DatePickerFragment.DatePickerListener) getTargetFragment();
     } else {
-      throw new ClassCastException(context.toString() + " must implement DatePickerListener");
+      throw new ClassCastException("Target fragment must implement DatePickerListener");
     }
   }
-  private void onDateSet(int year, int month, int day) {
-    // Notify the listener (which is EntryDetailsFragment)
-    if (listener != null) {
-      listener.onDateSelected(year, month, day);
-    }
-    dismiss(); // Close the dialog after selection
-  }
+//  private void onDateSet(int year, int month, int day) {
+//    // Notify the listener (which is EntryDetailsFragment)
+//    if (listener != null) {
+//      listener.onDateSelected(year, month, day);
+//    }
+//    dismiss(); // Close the dialog after selection
+//  }
 
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Calendar c = Calendar.getInstance();
-    long dateInMillis = getArguments() != null ? getArguments().getLong("date") : System.currentTimeMillis();
-    c.setTimeInMillis(dateInMillis); // Set time using the passed date
-
-    int year = c.get(Calendar.YEAR);
-    int month = c.get(Calendar.MONTH);
-    int day = c.get(Calendar.DAY_OF_MONTH);
-
-    return new DatePickerDialog(requireContext(), (dp, y, m, d) -> {
-      if (listener != null) {
-        listener.onDateSelected(y, m, d);
-      }
-    }, year, month, day);
-  }
 //    Calendar c = Calendar.getInstance();
-//    int year = getArguments() != null ? getArguments().getInt("year", c.get(Calendar.YEAR)):c.get(Calendar.YEAR);
-//    int month = getArguments() != null ? getArguments().getInt("month", c.get(Calendar.MONTH)):c.get(Calendar.MONTH);
-//    int day = getArguments() != null ? getArguments().getInt("day", c.get(Calendar.DAY_OF_MONTH)):c.get(Calendar.DAY_OF_MONTH);
+//    long dateInMillis = getArguments() != null ? getArguments().getLong("date") : System.currentTimeMillis();
+//    c.setTimeInMillis(dateInMillis); // Set time using the passed date
+//
+//    int year = c.get(Calendar.YEAR);
+//    int month = c.get(Calendar.MONTH);
+//    int day = c.get(Calendar.DAY_OF_MONTH);
 //
 //    return new DatePickerDialog(requireContext(), (dp, y, m, d) -> {
-////      EntryDetailsFragment fragment = (EntryDetailsFragment) getParentFragment();
 //      if (listener != null) {
-//        listener.onDateSelected(y, m + 1, d);
+//        listener.onDateSelected(y, m, d);
 //      }
 //    }, year, month, day);
 //  }
+    Calendar c = Calendar.getInstance();
+    int year = getArguments() != null ? getArguments().getInt("year", c.get(Calendar.YEAR)):c.get(Calendar.YEAR);
+    int month = getArguments() != null ? getArguments().getInt("month", c.get(Calendar.MONTH)):c.get(Calendar.MONTH);
+    int day = getArguments() != null ? getArguments().getInt("day", c.get(Calendar.DAY_OF_MONTH)):c.get(Calendar.DAY_OF_MONTH);
+
+    return new DatePickerDialog(requireContext(), (dp, y, m, d) -> {
+//      EntryDetailsFragment fragment = (EntryDetailsFragment) getParentFragment();
+      if (listener != null) {
+        listener.onDateSelected(y, m + 1, d);
+      }
+    }, year, month, day);
+  }
 }
