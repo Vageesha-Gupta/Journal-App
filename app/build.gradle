@@ -46,6 +46,8 @@ dependencies {
     debugImplementation "androidx.fragment:fragment-testing-manifest:1.8.3"
     debugImplementation "androidx.fragment:fragment-testing:1.8.3"
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.10.3'  // or latest version
+
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'

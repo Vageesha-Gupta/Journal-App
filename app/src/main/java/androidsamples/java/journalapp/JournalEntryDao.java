@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface JournalEntryDao {
     @Insert
-    void insert(JournalEntry entry);
+    long insert(JournalEntry entry);
 
     @Update
     void update(JournalEntry entry);
@@ -24,6 +24,6 @@ public interface JournalEntryDao {
     LiveData<List<JournalEntry>> getAllEntries();
 
     @Query("SELECT * FROM journal_entries WHERE id = :id LIMIT 1") // Ensure 'id' is the correct column name
-    LiveData<JournalEntry> getEntryById(int id);
+    LiveData<JournalEntry> getEntryById(long id);
 
 }
