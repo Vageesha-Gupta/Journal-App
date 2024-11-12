@@ -182,7 +182,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     String endTime = endTimeTextView.getText().toString();
     String description = descriptionTextView.getText().toString(); // Use this if you have a description field
 
-    if (date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
+    if (isFieldEmpty(date, "DATE") || isFieldEmpty(description, "") || isFieldEmpty(startTime, "START TIME") || isFieldEmpty(endTime, "END TIME")) {
       // Handle error: All fields must be filled
       Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
       return;
@@ -211,6 +211,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
 
     // Navigate back to the list
     NavHostFragment.findNavController(this).navigateUp();
+  }
+
+  private boolean isFieldEmpty(String fieldValue, String defaultValue) {
+    return fieldValue.isEmpty() || fieldValue.equalsIgnoreCase(defaultValue);
   }
 
   @Override
