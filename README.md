@@ -32,7 +32,12 @@ In the EntryList fragment menu bar, added an INFO button that redirects users to
 Ideas were borrowed from ChatGPT and web, we also used StackOverFlow to resolve errors.
 
 ## Talkback experience
+Using TalkBack with the Journal App provided valuable insights into the app’s accessibility for users who rely on screen readers. Here’s a summary of our experience:
 
+1. Overall Navigation: TalkBack allowed easy navigation between screens. The EntryList and EntryDetails fragments were accessible, and TalkBack could read out labels and buttons, helping users understand each screen’s structure.
+2. Date and Time Pickers: The date and time pickers were functional with TalkBack, but selecting specific dates and times required multiple gestures. We could enhance this by providing custom descriptions or hints to make it easier for users to pick values.
+3. Action Buttons: Key action buttons, such as DELETE, SHARE, and INFO, were accessible and identified by TalkBack. Each button's purpose was communicated effectively, though adding more descriptive labels would provide even more clarity.
+4. Confirmation Dialogs: The DELETE confirmation dialog was accessible, with TalkBack reading out the prompt and button options. Users could navigate and select options without issue.
 
 ## Testing
 We did not follow a test-driven development (TDD) approach for this project. Instead, we first implemented the main code and then wrote test cases to verify the functionality of each feature. This approach allowed us to focus on coding the core features before turning our attention to validation and testing.
