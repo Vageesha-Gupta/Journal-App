@@ -3,19 +3,23 @@ package androidsamples.java.journalapp;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import java.util.List;
 
 public class JournalViewModel extends AndroidViewModel {
     private JournalRepository repository;
     private LiveData<List<JournalEntry>> allEntries;
+    private final SavedStateHandle savedStateHandle;
 
-    public JournalViewModel(Application application) {
+    public JournalViewModel(Application application, @NonNull SavedStateHandle savedStateHandle) {
         super(application);
         repository = new JournalRepository(application);
         allEntries = repository.getAllEntries();
+        this.savedStateHandle=savedStateHandle;
     }
 
     public void insert(JournalEntry entry) {
@@ -63,6 +67,7 @@ public class JournalViewModel extends AndroidViewModel {
     public LiveData<List<JournalEntry>> getAllEntries() {
         return allEntries; // Return all journal entries
     }
+
     public void delete(JournalEntry entry) {
         new DeleteEntryAsyncTask(repository).execute(entry);
     }
