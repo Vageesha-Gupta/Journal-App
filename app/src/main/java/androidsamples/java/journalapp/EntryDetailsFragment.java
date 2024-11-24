@@ -25,7 +25,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import org.w3c.dom.Text;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -165,7 +168,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   }
 
   public void updateDate(int year, int month, int day) {
-    String selectedDate = day + "/" + (month + 1) + "/" + year; // Format the date correctly by adding 1 to the month
+    String selectedDate = day + "/" + (month ) + "/" + year; // Format the date correctly by adding 1 to the month
     dateTextView.setText(selectedDate); // Display the selected date in the TextView
 //    String selectedDate = day + "/" + month + "/" + year; // Format the date
 //    dateTextView.setText(selectedDate); // Display the selected date in the TextView
@@ -189,6 +192,18 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
       return;
     }
+
+    if (isFutureDate(date)) {
+      Toast.makeText(getContext(), "Selected date cannot be in the future", Toast.LENGTH_SHORT).show();
+      return;
+    }
+    // Time validation: Check if end time is before start time
+    if (isEndTimeBeforeStartTime(startTime, endTime)) {
+      Toast.makeText(getContext(), "End time must be after start time", Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+
 
     if (currentJournalEntry != null) {
       // We're editing an existing entry, so update it
@@ -214,9 +229,35 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     // Navigate back to the list
     NavHostFragment.findNavController(this).navigateUp();
   }
+  private boolean isEndTimeBeforeStartTime(String startTime, String endTime) {
+    try {
+      // Parse the times as Date objects
+      SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+      Date start = timeFormat.parse(startTime);
+      Date end = timeFormat.parse(endTime);
+
+      // Compare the times
+      return end != null && start != null && (end.before(start) || end.equals(start)); // return true if end time is before start time
+    } catch (ParseException e) {
+      e.printStackTrace();
+      return false; // In case of a parse error, we return false (time is valid)
+    }
+  }
+
 
   private boolean isFieldEmpty(String fieldValue, String defaultValue) {
     return fieldValue.isEmpty() || fieldValue.equalsIgnoreCase(defaultValue);
+  }
+  private boolean isFutureDate(String selectedDate) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    try {
+      Date selected = dateFormat.parse(selectedDate);
+      Date currentDate = new Date();
+      return selected != null && selected.after(currentDate); // Return true if the selected date is in the future
+    } catch (ParseException e) {
+      e.printStackTrace();
+      return false; // If parsing fails, return false
+    }
   }
 
   @Override
