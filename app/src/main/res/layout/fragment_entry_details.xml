@@ -47,6 +47,30 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/edit_title" />
+  <EditText
+      android:id="@+id/edit_location"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:hint="Enter Location"
+      android:inputType="text"
+      android:textAlignment="center"
+      app:layout_constraintTop_toBottomOf="@+id/btn_entry_date"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginTop="8dp" />
+
+
+  <Button
+      android:id="@+id/btn_location"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Open in Maps"
+      app:layout_constraintTop_toBottomOf="@+id/edit_location"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginTop="8dp" />
+
+
 
   <Button
       android:id="@+id/btn_start_time"
@@ -59,7 +83,7 @@
       app:layout_constraintEnd_toStartOf="@+id/textView"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/btn_entry_date" />
+      app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
   <TextView
       android:id="@+id/textView"

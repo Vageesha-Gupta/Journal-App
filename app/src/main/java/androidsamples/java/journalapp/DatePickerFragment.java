@@ -29,12 +29,6 @@ public class DatePickerFragment extends DialogFragment {
   }
 
   public void onCreate(@NonNull Bundle savedInstanceState) {
-//    super.onCreate(context);
-//    if (context instanceof DatePickerListener) {
-//      listener = (DatePickerListener) context;
-//    } else {
-//      throw new ClassCastException(context.toString() + " must implement DatePickerListener");
-//    }
     super.onCreate(savedInstanceState);
     if (getTargetFragment() instanceof DatePickerFragment.DatePickerListener) {
       listener = (DatePickerFragment.DatePickerListener) getTargetFragment();
@@ -42,13 +36,6 @@ public class DatePickerFragment extends DialogFragment {
       throw new ClassCastException("Target fragment must implement DatePickerListener");
     }
   }
-//  private void onDateSet(int year, int month, int day) {
-//    // Notify the listener (which is EntryDetailsFragment)
-//    if (listener != null) {
-//      listener.onDateSelected(year, month, day);
-//    }
-//    dismiss(); // Close the dialog after selection
-//  }
 
   @NonNull
   @Override

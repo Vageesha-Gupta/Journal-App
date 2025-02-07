@@ -14,6 +14,9 @@ public class JournalEntry {
     private String endTime;
     private String description;
 //    private String title;
+    private String location;
+
+
 
 
 //    private Date entryDate;
@@ -71,6 +74,13 @@ public class JournalEntry {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 //    public Date getEntryDate() { return entryDate; }

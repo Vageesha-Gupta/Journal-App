@@ -1,6 +1,7 @@
 package androidsamples.java.journalapp;
 
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,10 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   private TextView endTimeTextView;
   private TextView descriptionTextView;
   private JournalViewModel journalViewModel;
-//  private TextView descriptionTextView;
+  private TextView locationTextView;
+  private Button locationButton;
+
+  //  private TextView descriptionTextView;
   private JournalEntry currentJournalEntry;
   @Nullable
   @Override
@@ -67,6 +71,8 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     startTimeTextView = view.findViewById(R.id.btn_start_time);
     endTimeTextView = view.findViewById(R.id.btn_end_time);
     descriptionTextView = view.findViewById(R.id.edit_title);
+    locationTextView = view.findViewById(R.id.edit_location);
+    locationButton = view.findViewById(R.id.btn_location);
 //    descriptionTextView = view.findViewById(R.id.edit_description);
 
     journalViewModel = new ViewModelProvider(requireActivity()).get(JournalViewModel.class);
@@ -133,12 +139,19 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
         startActivity(Intent.createChooser(sendIntent, "Share via"));
       }
     });
-//    descriptionTextView.setOnClickListener(v -> {
-//      // Handle click event for title if needed (e.g., you could open a dialog)
-//      Toast.makeText(getContext(), "Title clicked", Toast.LENGTH_SHORT).show();
-//    });
     Button saveButton = view.findViewById(R.id.btn_save);
     saveButton.setOnClickListener(v -> saveEntry());
+    locationButton.setOnClickListener(v -> {
+      String locationQuery = locationTextView.getText().toString();
+      if (locationQuery.isEmpty()) {
+        Toast.makeText(getContext(), "Please enter a location", Toast.LENGTH_SHORT).show();
+        return;
+      }
+      String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", Uri.encode(locationQuery));
+      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+      startActivity(intent);
+
+    });
 
 
   }
@@ -170,8 +183,6 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
   public void updateDate(int year, int month, int day) {
     String selectedDate = day + "/" + (month ) + "/" + year; // Format the date correctly by adding 1 to the month
     dateTextView.setText(selectedDate); // Display the selected date in the TextView
-//    String selectedDate = day + "/" + month + "/" + year; // Format the date
-//    dateTextView.setText(selectedDate); // Display the selected date in the TextView
   }
   public void updateTime(int hour, int minute, boolean isStartTime) {
     String time = String.format("%02d:%02d", hour, minute);
@@ -186,6 +197,12 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     String startTime = startTimeTextView.getText().toString();
     String endTime = endTimeTextView.getText().toString();
     String description = descriptionTextView.getText().toString(); // Use this if you have a description field
+    String location = locationTextView.getText().toString();
+
+    if (isFieldEmpty(location, "LOCATION")) {
+      Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+      return;
+    }
 
     if (isFieldEmpty(date, "DATE") || isFieldEmpty(description, "") || isFieldEmpty(startTime, "START TIME") || isFieldEmpty(endTime, "END TIME")) {
       // Handle error: All fields must be filled
@@ -211,7 +228,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       currentJournalEntry.setStartTime(startTime);
       currentJournalEntry.setEndTime(endTime);
       currentJournalEntry.setDescription(description); // Add if applicable
-
+      currentJournalEntry.setLocation(location);
       // Update entry in the ViewModel
       journalViewModel.update(currentJournalEntry);
     } else {
@@ -220,7 +237,8 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
       entry.setDate(date);
       entry.setStartTime(startTime);
       entry.setEndTime(endTime);
-      entry.setDescription(description); // Add if applicable
+      entry.setDescription(description);// Add if applicable
+      entry.setLocation(location);
 
       // Save the new entry to the ViewModel
       journalViewModel.insert(entry);
@@ -260,6 +278,7 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
     }
   }
 
+
   @Override
   public void onTimeSelected(int hour, int minute, boolean isStartTime) {
     updateTime(hour, minute, isStartTime);
@@ -278,12 +297,12 @@ public class EntryDetailsFragment extends Fragment implements DatePickerFragment
           startTimeTextView.setText(journalEntry.getStartTime());
           endTimeTextView.setText(journalEntry.getEndTime());
           descriptionTextView.setText(journalEntry.getDescription());
-          // Assuming a TextView for description
-//          descriptionTextView.setText(journalEntry.getDescription());
+          locationTextView.setText(journalEntry.getLocation());
+
         }
       });
     }
-//    int entryId = getArguments().getInt("entryId",-1); // Retrieve entry ID from arguments
+//    int entryId = getArguments().getInt("entryId",-1);
 //    if (entryId == -1) {
 //      return;
 //    }

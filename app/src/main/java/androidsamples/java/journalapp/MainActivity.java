@@ -106,43 +106,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerFragmen
   }
 
 
-//  private void saveEntry() {
-//    String title = ((EditText) findViewById(R.id.edit_title)).getText().toString().trim();
-//    String date = dateTextView.getText().toString();
-//    String startTime = startTimeTextView.getText().toString();
-//    String endTime = endTimeTextView.getText().toString();
-////    String description = descriptionTextView.getText().toString();
-//
-//    if (title.isEmpty() || date.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
-//      // Build a message with missing fields
-//      StringBuilder missingFields = new StringBuilder("Please fill in the following fields: ");
-//      if (title.isEmpty()) missingFields.append("Title, ");
-//      if (date.isEmpty()) missingFields.append("Date, ");
-//      if (startTime.isEmpty()) missingFields.append("Start Time, ");
-//      if (endTime.isEmpty()) missingFields.append("End Time, ");
-//
-//      // Remove the last comma and space
-//      missingFields.setLength(missingFields.length() - 2);
-//
-//      // Display a Toast message
-//      Toast.makeText(this, missingFields.toString(), Toast.LENGTH_SHORT).show();
-//      return; // Exit the method early if validation fails
-//    }
-//
-//    // Create a new JournalEntry object
-//    JournalEntry entry = new JournalEntry(date, startTime, endTime,description);
-//    entry.setDate(date);
-//    entry.setStartTime(startTime);
-//    entry.setEndTime(endTime);
-//    entry.setDescription(description);
-//
-//    // Use a ViewModel to interact with the database
-//    JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
-//
-//    // Insert the entry into the database
-//    viewModel.insert(entry);
-//
-//  }
 
 
 
